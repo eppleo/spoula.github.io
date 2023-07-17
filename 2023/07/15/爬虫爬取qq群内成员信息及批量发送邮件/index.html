@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>爬虫爬取qq群内成员信息及批量发送邮件 | 别看我</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言注：代码仅供学习，别拿来做别的事哦！ 事情起因是好朋友发来一段代码 123456789101112131415161718192021222324import smtplibfrom email.message import EmailMessageimport pandas as pddef send_email(remail, rsubject, rcontent):    email &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫爬取qq群内成员信息及批量发送邮件">
+<meta property="og:url" content="http://example.com/2023/07/15/%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96qq%E7%BE%A4%E5%86%85%E6%88%90%E5%91%98%E4%BF%A1%E6%81%AF%E5%8F%8A%E6%89%B9%E9%87%8F%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/index.html">
+<meta property="og:site_name" content="别看我">
+<meta property="og:description" content="前言注：代码仅供学习，别拿来做别的事哦！ 事情起因是好朋友发来一段代码 123456789101112131415161718192021222324import smtplibfrom email.message import EmailMessageimport pandas as pddef send_email(remail, rsubject, rcontent):    email &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230715142126551.png">
+<meta property="article:published_time" content="2023-07-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-15T07:22:42.547Z">
+<meta property="article:author" content="spoula">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="qq">
+<meta property="article:tag" content="邮箱">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230715142126551.png">
+  
+    <link rel="alternative" href="/atom.xml" title="别看我" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/ida.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/tout.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">spoula</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">目录</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="mail" target="_blank" href="/spoula@126.com" title="mail">mail</a>
+					        
+								<a class="google" target="_blank" href="/goospoula@gmail.com" title="google">google</a>
+					        
+						</div>
+						<!-- music -->
+						
+							<!-- <div style="position: absolute; bottom: 120px; left: auto; width: 85%;"> -->
+							<!-- <div style="position: absolute; left: auto; width: 85%;"> -->
+								<!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=220 height=86 src="//music.163.com/outchain/player?type=0&amp;id=8558675731&amp;auto=1&amp;height=66"></iframe> -->
+								<!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=8558675731&auto=1&height=66"></iframe> -->
+								<!-- <embed border="0" marginwidth="0" marginheight="0" width="250" height="52" src="//music.163.com/outchain/player?type=0&amp;id=8558675731&amp;auto=1&amp;height=32"> -->
+							<!-- </div> -->
+							<div style="width: 232px; height: 86px;">
+								<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="100%" src="//music.163.com/outchain/player?type=0&id=8558675731&auto=1&height=66"></iframe>
+							  </div>
+							  
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/qq/" style="font-size: 10px;">qq</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">だるい...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/tout.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">目录</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="mail" target="_blank" href="/spoula@126.com" title="mail">mail</a>
+			        
+						<a class="google" target="_blank" href="/goospoula@gmail.com" title="google">google</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-爬虫爬取qq群内成员信息及批量发送邮件" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2023/07/15/%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96qq%E7%BE%A4%E5%86%85%E6%88%90%E5%91%98%E4%BF%A1%E6%81%AF%E5%8F%8A%E6%89%B9%E9%87%8F%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" class="article-date">
+  	<time datetime="2023-07-14T16:00:00.000Z" itemprop="datePublished">2023-07-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      爬虫爬取qq群内成员信息及批量发送邮件
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/qq/" rel="tag">qq</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%82%AE%E7%AE%B1/" rel="tag">邮箱</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>注：代码仅供学习，别拿来做别的事哦！</p>
+<p>事情起因是好朋友发来一段代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.message <span class="keyword">import</span> EmailMessage</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_email</span>(<span class="params">remail, rsubject, rcontent</span>):</span><br><span class="line">    email = EmailMessage()                          <span class="comment">## Creating a object for EmailMessage</span></span><br><span class="line">    email[<span class="string">&#x27;from&#x27;</span>] = <span class="string">&#x27;The Pythoneer Here&#x27;</span>            <span class="comment">## Person who is sending</span></span><br><span class="line">    email[<span class="string">&#x27;to&#x27;</span>] = remail                            <span class="comment">## Whom we are sending</span></span><br><span class="line">    email[<span class="string">&#x27;subject&#x27;</span>] = rsubject                     <span class="comment">## Subject of email</span></span><br><span class="line">    email.set_content(rcontent)                     <span class="comment">## content of email</span></span><br><span class="line">    <span class="keyword">with</span> smtplib.SMTP(host=<span class="string">&#x27;smtp.gmail.com&#x27;</span>,port=<span class="number">587</span>)<span class="keyword">as</span> smtp:</span><br><span class="line">        smtp.ehlo()                                 <span class="comment">## server object</span></span><br><span class="line">        smtp.starttls()                             <span class="comment">## used to send data between server and client</span></span><br><span class="line">        smtp.login(<span class="string">&quot;xxxx@gmail.com&quot;</span>,<span class="string">&quot;&quot;</span>) <span class="comment">## login id and password of gmail</span></span><br><span class="line">        smtp.send_message(email)                    <span class="comment">## Sending email</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;email send to &quot;</span>,remail)              <span class="comment">## Printing success message</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    df = pd.read_excel(<span class="string">&#x27;list.xlsx&#x27;</span>)</span><br><span class="line">    length = <span class="built_in">len</span>(df)+<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> index, item <span class="keyword">in</span> df.iterrows():</span><br><span class="line">        email = item[<span class="number">0</span>]</span><br><span class="line">        subject = item[<span class="number">1</span>]</span><br><span class="line">        content = item[<span class="number">2</span>]</span><br><span class="line">        send_email(email,subject,content)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>分析了一下，代码大致意思是从list.xlsx表里读取第一列的邮箱，并将第二列的标题和第三列的内容发送给他。</p>
+<span id="more"></span>
+
+<h3 id="批量发送"><a href="#批量发送" class="headerlink" title="批量发送"></a>批量发送</h3><p>既然是批量发送，表格里每个邮箱后面都要写邮件标题和内容，大量重复，即使复制粘贴也太麻烦了，于是为何不单独弄个文件夹放邮箱信息呢，然后一个表格文件存发送人呢？</p>
+<p>还有个问题就是之前代码用的是gmail邮箱发送，因为gmail是谷歌的，发送时太慢。于是我将发送邮件服务器改成126邮箱，注册个126邮箱小号来使用吧。别忘了打开smtp服务，具体打开方法百度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email <span class="keyword">import</span> encoders</span><br><span class="line"><span class="keyword">from</span> email.mime.base <span class="keyword">import</span> MIMEBase</span><br><span class="line"><span class="keyword">from</span> email.mime.image <span class="keyword">import</span> MIMEImage</span><br><span class="line"><span class="keyword">from</span> smtplib <span class="keyword">import</span> SMTP_SSL</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send</span>(<span class="params">receiver2</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        msg = MIMEMultipart()</span><br><span class="line">        msg[<span class="string">&quot;Subject&quot;</span>] = Header(mail_title, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        msg[<span class="string">&quot;From&quot;</span>] = sender_qq</span><br><span class="line">        msg[<span class="string">&quot;To&quot;</span>] = receiver2</span><br><span class="line">        msg.attach(MIMEText(mail_content, <span class="string">&#x27;html&#x27;</span>))</span><br><span class="line">        msg.attach(img)</span><br><span class="line">        msg.attach(txtAnnex)</span><br><span class="line">        smtp = SMTP_SSL(host_server, <span class="number">465</span>)  <span class="comment"># ssl登录连接到邮件服务器</span></span><br><span class="line">        smtp.set_debuglevel(<span class="number">0</span>)  <span class="comment"># 0是关闭，1是开启debug</span></span><br><span class="line">        smtp.ehlo(host_server)  <span class="comment"># 跟服务器打招呼，告诉它我们准备连接，最好加上这行代码</span></span><br><span class="line">        smtp.login(sender_qq, pwd)</span><br><span class="line">        smtp.sendmail(sender_qq, [receiver2], msg.as_string())</span><br><span class="line">        smtp.quit()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;邮件发送成功给&quot;</span>, receiver2)</span><br><span class="line">    <span class="keyword">except</span> smtplib.SMTPException:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;无法发送邮件给&quot;</span>, receiver2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">host_server = <span class="string">&#x27;smtp.126.com&#x27;</span>  <span class="comment"># qq邮箱smtp服务器</span></span><br><span class="line">sender_qq = <span class="string">&#x27;邮箱@126.com&#x27;</span>  <span class="comment"># 发件人邮箱</span></span><br><span class="line">pwd = <span class="string">&#x27;授权码&#x27;</span>  <span class="comment"># 授权码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 标题</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;./email/subject.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> u:</span><br><span class="line">    mail_title = u.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 邮件正文内容</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;./email/content.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    mail_content = f.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 邮箱图片 无图片可以注释掉</span></span><br><span class="line">img_file = <span class="built_in">open</span>(<span class="string">r&#x27;./email/kunkun.gif&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">img_data = img_file.read()</span><br><span class="line">img_file.close()</span><br><span class="line">img = MIMEImage(img_data)</span><br><span class="line">img.add_header(<span class="string">&#x27;Content-ID&#x27;</span>, <span class="string">&#x27;tutu&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 邮箱附件 无附件可以注释掉</span></span><br><span class="line">txtAnnex = MIMEBase(<span class="string">&quot;application&quot;</span>, <span class="string">&quot;octet-stream&quot;</span>)</span><br><span class="line">txtAnnex.set_payload(<span class="built_in">open</span>(<span class="string">r&quot;./email/ji.mp3&quot;</span>, <span class="string">&quot;rb&quot;</span>).read())</span><br><span class="line">txtAnnex[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;application/octet-stream&#x27;</span></span><br><span class="line">txtAnnex[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment; filename= ji.mp3&#x27;</span></span><br><span class="line">encoders.encode_base64(txtAnnex)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收人列表</span></span><br><span class="line">df = pd.read_excel(<span class="string">f&#x27;./qq/email.xlsx&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> index, item <span class="keyword">in</span> df.iterrows():</span><br><span class="line">    receiver = item[<span class="number">0</span>]</span><br><span class="line">    send(receiver)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这是改后的代码，多了增加发送图片和附件功能，并且发送的邮件并不是一个文本，而是html格式，这样邮件就可以像网页一样精彩，代码中图片和附件如果不发送可以注释掉</p>
+<p>大体就是在当前目录下qq文件夹内读取email.xlsx文件内第一列获取接收者邮箱，然后批量将email文件夹内的邮件文件发出去。</p>
+<h3 id="爬取qq邮箱"><a href="#爬取qq邮箱" class="headerlink" title="爬取qq邮箱"></a>爬取qq邮箱</h3><p>批量发送的脚本是有了，但是有个问题，email.xlsx里面的邮箱列表要我手打一个一个输进去，太麻烦了！</p>
+<p>为何不写个爬虫脚本直接将一个群里的人邮箱都爬来呢？</p>
+<p>说干就干，直接上脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> openpyxl</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> openpyxl.workbook <span class="keyword">import</span> Workbook</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Qun</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cookie: <span class="built_in">str</span>, bkn: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.cookie = cookie</span><br><span class="line">        self.bkn = bkn</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_data</span>(<span class="params">self, data: <span class="built_in">dict</span>, params=<span class="string">&#x27;search_group_members&#x27;</span></span>) -&gt; <span class="built_in">dict</span>:</span><br><span class="line">        url = <span class="string">f&#x27;https://qun.qq.com/cgi-bin/qun_mgr/<span class="subst">&#123;params&#125;</span>&#x27;</span></span><br><span class="line">        headers = &#123;</span><br><span class="line">            <span class="string">&#x27;Cookie&#x27;</span>: self.cookie,</span><br><span class="line">            <span class="string">&#x27;Origin&#x27;</span>: <span class="string">&#x27;https://qun.qq.com&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Referer&#x27;</span>: <span class="string">&#x27;https://qun.qq.com/member.html&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        res = requests.post(url, headers=headers, data=data)</span><br><span class="line">        <span class="keyword">return</span> res.json()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_count</span>(<span class="params">self, gc: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        获取某个群的成员数量</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&#x27;gc&#x27;</span>: gc,</span><br><span class="line">            <span class="string">&#x27;st&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;end&#x27;</span>: <span class="string">&#x27;20&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;sort&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;bkn&#x27;</span>: self.bkn</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> self.get_data(data).get(<span class="string">&#x27;search_count&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_data</span>(<span class="params">self, gc: <span class="built_in">int</span>, num: <span class="built_in">int</span></span>):</span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        构造表单数据</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        n = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> st <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, num, <span class="number">20</span>):</span><br><span class="line">            <span class="keyword">if</span> st != <span class="number">0</span>:</span><br><span class="line">                n += <span class="number">1</span></span><br><span class="line">                st += n</span><br><span class="line">                end = st + <span class="number">20</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                end = st + <span class="number">20</span></span><br><span class="line">            <span class="keyword">if</span> st &gt;= num:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">elif</span> end &gt; num:</span><br><span class="line">                <span class="keyword">yield</span> &#123;</span><br><span class="line">                    <span class="string">&#x27;gc&#x27;</span>: gc,</span><br><span class="line">                    <span class="string">&#x27;st&#x27;</span>: st,</span><br><span class="line">                    <span class="string">&#x27;end&#x27;</span>: num,</span><br><span class="line">                    <span class="string">&#x27;sort&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;bkn&#x27;</span>: self.bkn</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">yield</span> &#123;</span><br><span class="line">                <span class="string">&#x27;gc&#x27;</span>: gc,</span><br><span class="line">                <span class="string">&#x27;st&#x27;</span>: st,</span><br><span class="line">                <span class="string">&#x27;end&#x27;</span>: end,</span><br><span class="line">                <span class="string">&#x27;sort&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;bkn&#x27;</span>: self.bkn</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">&#x27;./qq&#x27;</span>):</span><br><span class="line">            os.mkdir(<span class="string">&#x27;./qq&#x27;</span>)</span><br><span class="line">        num = self.get_count(gc)</span><br><span class="line">        uin_list = []</span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> self.set_data(gc, num):</span><br><span class="line">            <span class="keyword">for</span> uins <span class="keyword">in</span> self.get_data(data).get(<span class="string">&#x27;mems&#x27;</span>):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&#x27;抓到&#x27;</span> + <span class="built_in">str</span>(uins.get(<span class="string">&#x27;uin&#x27;</span>)) + <span class="string">&#x27;了，给爷爬！&#x27;</span>)</span><br><span class="line">                uin_list.append(<span class="built_in">str</span>(uins.get(<span class="string">&#x27;uin&#x27;</span>)) + <span class="string">&#x27;@qq.com&#x27;</span>)</span><br><span class="line">            df = pd.DataFrame(uin_list, columns=[<span class="string">&#x27;email&#x27;</span>])</span><br><span class="line">            filename = <span class="string">f&#x27;./qq/<span class="subst">&#123;gc&#125;</span>.xlsx&#x27;</span></span><br><span class="line">            df.to_excel(filename, index=<span class="literal">False</span>, startcol=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://qun.qq.com/member.html 请求头cookie</span></span><br><span class="line">COOKIE = <span class="string">&#x27;你的cookie&#x27;</span></span><br><span class="line"><span class="comment"># https://qun.qq.com/cgi-bin/qun_mgr/get_group_list 负载参数bkn</span></span><br><span class="line">BKN = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#群号</span></span><br><span class="line">gc = <span class="string">&#x27;群号&#x27;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    Qun(COOKIE, BKN).main()</span><br></pre></td></tr></table></figure>
+
+<p>代码主要是获取这个qq号的某个群所有成员的qq号加上@qq.com就是他们的邮箱了，然后存在当前路径&#x2F;qq文件下对应群号.xlsx文件里</p>
+<p>cookie的话在 <a target="_blank" rel="noopener" href="https://qun.qq.com/member.html">https://qun.qq.com/member.html</a> 抓个包就能获取，BKN我之前在写这代码测试时是可以直接抓包获取到的，但现在似乎没了，我有去找了找，发现大佬逆向了BKN的算法，<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35834501/article/details/106539199">大佬的文章</a>，下面是算法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bkn</span>(<span class="params">skey</span>):</span><br><span class="line">    e = skey</span><br><span class="line">    t = <span class="number">5381</span></span><br><span class="line">    n = <span class="number">0</span></span><br><span class="line">    o = <span class="built_in">len</span>(e)</span><br><span class="line">    <span class="keyword">while</span> n &lt; o:</span><br><span class="line">        t += (t &lt;&lt; <span class="number">5</span>) + <span class="built_in">ord</span>(e[n])</span><br><span class="line">        n += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> t &amp; <span class="number">2147483647</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">skey = <span class="string">&#x27;从cookie里获取的skey&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(bkn(skey))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当中的skey的值在cookie中有</p>
+<p>这代码运行起来真的很爽</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230715142126551.png" alt="image-20230715142126551"></p>
+<h3 id="结合"><a href="#结合" class="headerlink" title="结合"></a>结合</h3><p>下面就是将俩代码结合起来用了</p>
+<p>这是主文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> pi_fa_quan <span class="keyword">import</span> fa</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Qun</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cookie: <span class="built_in">str</span>, bkn: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.cookie = cookie</span><br><span class="line">        self.bkn = bkn</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_data</span>(<span class="params">self, data: <span class="built_in">dict</span>, params=<span class="string">&#x27;search_group_members&#x27;</span></span>) -&gt; <span class="built_in">dict</span>:</span><br><span class="line">        url = <span class="string">f&#x27;https://qun.qq.com/cgi-bin/qun_mgr/<span class="subst">&#123;params&#125;</span>&#x27;</span></span><br><span class="line">        headers = &#123;</span><br><span class="line">            <span class="string">&#x27;Cookie&#x27;</span>: self.cookie,</span><br><span class="line">            <span class="string">&#x27;Origin&#x27;</span>: <span class="string">&#x27;https://qun.qq.com&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Referer&#x27;</span>: <span class="string">&#x27;https://qun.qq.com/member.html&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        res = requests.post(url, headers=headers, data=data)</span><br><span class="line">        <span class="keyword">return</span> res.json()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_count</span>(<span class="params">self, gc: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        获取某个群的成员数量</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&#x27;gc&#x27;</span>: gc,</span><br><span class="line">            <span class="string">&#x27;st&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;end&#x27;</span>: <span class="string">&#x27;20&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;sort&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;bkn&#x27;</span>: self.bkn</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> self.get_data(data).get(<span class="string">&#x27;search_count&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_data</span>(<span class="params">self, gc: <span class="built_in">int</span>, num: <span class="built_in">int</span></span>):</span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        构造表单数据</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        n = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> st <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, num, <span class="number">20</span>):</span><br><span class="line">            <span class="keyword">if</span> st != <span class="number">0</span>:</span><br><span class="line">                n += <span class="number">1</span></span><br><span class="line">                st += n</span><br><span class="line">                end = st + <span class="number">20</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                end = st + <span class="number">20</span></span><br><span class="line">            <span class="keyword">if</span> st &gt;= num:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">elif</span> end &gt; num:</span><br><span class="line">                <span class="keyword">yield</span> &#123;</span><br><span class="line">                    <span class="string">&#x27;gc&#x27;</span>: gc,</span><br><span class="line">                    <span class="string">&#x27;st&#x27;</span>: st,</span><br><span class="line">                    <span class="string">&#x27;end&#x27;</span>: num,</span><br><span class="line">                    <span class="string">&#x27;sort&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;bkn&#x27;</span>: self.bkn</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">yield</span> &#123;</span><br><span class="line">                <span class="string">&#x27;gc&#x27;</span>: gc,</span><br><span class="line">                <span class="string">&#x27;st&#x27;</span>: st,</span><br><span class="line">                <span class="string">&#x27;end&#x27;</span>: end,</span><br><span class="line">                <span class="string">&#x27;sort&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;bkn&#x27;</span>: self.bkn</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">&#x27;./qq&#x27;</span>):</span><br><span class="line">            os.mkdir(<span class="string">&#x27;./qq&#x27;</span>)</span><br><span class="line">        num = self.get_count(gc)</span><br><span class="line">        uin_list = []</span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> self.set_data(gc, num):</span><br><span class="line">            <span class="keyword">for</span> uins <span class="keyword">in</span> self.get_data(data).get(<span class="string">&#x27;mems&#x27;</span>):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&#x27;抓到&#x27;</span> + <span class="built_in">str</span>(uins.get(<span class="string">&#x27;uin&#x27;</span>)) + <span class="string">&#x27;了，给爷爬！&#x27;</span>)</span><br><span class="line">                uin_list.append(<span class="built_in">str</span>(uins.get(<span class="string">&#x27;uin&#x27;</span>)) + <span class="string">&#x27;@qq.com&#x27;</span>)</span><br><span class="line">            df = pd.DataFrame(uin_list, columns=[<span class="string">&#x27;email&#x27;</span>])</span><br><span class="line">            filename = <span class="string">f&#x27;./qq/<span class="subst">&#123;gc&#125;</span>.xlsx&#x27;</span></span><br><span class="line">            df.to_excel(filename, index=<span class="literal">False</span>, startcol=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># https://qun.qq.com/member.html 请求头cookie</span></span><br><span class="line">COOKIE = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># https://qun.qq.com/cgi-bin/qun_mgr/get_group_list 负载参数bkn</span></span><br><span class="line">BKN = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 群号</span></span><br><span class="line">gc = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    Qun(COOKIE, BKN).main()</span><br><span class="line">    fa(gc).main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这是调用的批量转发类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email <span class="keyword">import</span> encoders</span><br><span class="line"><span class="keyword">from</span> email.mime.base <span class="keyword">import</span> MIMEBase</span><br><span class="line"><span class="keyword">from</span> email.mime.image <span class="keyword">import</span> MIMEImage</span><br><span class="line"><span class="keyword">from</span> smtplib <span class="keyword">import</span> SMTP_SSL</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">fa</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, gc: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.gc = gc</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">send</span>(<span class="params">self, receiver2</span>):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            msg = MIMEMultipart()</span><br><span class="line">            msg[<span class="string">&quot;Subject&quot;</span>] = Header(self.mail_title, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            msg[<span class="string">&quot;From&quot;</span>] = self.sender_qq</span><br><span class="line">            msg[<span class="string">&quot;To&quot;</span>] = receiver2</span><br><span class="line">            msg.attach(MIMEText(self.mail_content, <span class="string">&#x27;html&#x27;</span>))</span><br><span class="line">            msg.attach(self.img)</span><br><span class="line">            msg.attach(self.txtAnnex)</span><br><span class="line">            smtp = SMTP_SSL(self.host_server, <span class="number">465</span>)  <span class="comment"># ssl登录连接到邮件服务器</span></span><br><span class="line">            smtp.set_debuglevel(<span class="number">0</span>)  <span class="comment"># 0是关闭，1是开启debug</span></span><br><span class="line">            smtp.ehlo(self.host_server)  <span class="comment"># 跟服务器打招呼，告诉它我们准备连接，最好加上这行代码</span></span><br><span class="line">            smtp.login(self.sender_qq, self.pwd)</span><br><span class="line">            smtp.sendmail(self.sender_qq, [receiver2], msg.as_string())</span><br><span class="line">            smtp.quit()</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;邮件发送成功给&quot;</span>, receiver2)</span><br><span class="line">        <span class="keyword">except</span> smtplib.SMTPException:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;无法发送邮件给&quot;</span>, receiver2)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">        self.host_server = <span class="string">&#x27;smtp.126.com&#x27;</span>  <span class="comment"># qq邮箱smtp服务器</span></span><br><span class="line">        self.sender_qq = <span class="string">&#x27;&#x27;</span>  <span class="comment"># 发件人邮箱</span></span><br><span class="line">        self.pwd = <span class="string">&#x27;&#x27;</span>  <span class="comment"># 授权码</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 标题</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;./email/subject.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> u:</span><br><span class="line">            self.mail_title = u.read()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 邮件正文内容</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;./email/content.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            self.mail_content = f.read()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 邮箱图片</span></span><br><span class="line">        img_file = <span class="built_in">open</span>(<span class="string">r&#x27;./email/kunkun.gif&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">        img_data = img_file.read()</span><br><span class="line">        img_file.close()</span><br><span class="line">        self.img = MIMEImage(img_data)</span><br><span class="line">        self.img.add_header(<span class="string">&#x27;Content-ID&#x27;</span>, <span class="string">&#x27;tutu&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 邮箱附件</span></span><br><span class="line">        self.txtAnnex = MIMEBase(<span class="string">&quot;application&quot;</span>, <span class="string">&quot;octet-stream&quot;</span>)</span><br><span class="line">        self.txtAnnex.set_payload(<span class="built_in">open</span>(<span class="string">r&quot;./email/ji.mp3&quot;</span>, <span class="string">&quot;rb&quot;</span>).read())</span><br><span class="line">        self.txtAnnex[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;application/octet-stream&#x27;</span></span><br><span class="line">        self.txtAnnex[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment; filename= ji.mp3&#x27;</span></span><br><span class="line">        encoders.encode_base64(self.txtAnnex)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 接收人列表</span></span><br><span class="line">        df = pd.read_excel(<span class="string">f&#x27;./qq/<span class="subst">&#123;self.gc&#125;</span>.xlsx&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> index, item <span class="keyword">in</span> df.iterrows():</span><br><span class="line">            receiver = item[<span class="number">0</span>]</span><br><span class="line">            self.send(receiver)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gc0 = <span class="string">&#x27;email&#x27;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    fa(gc0).main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/131q8A2hzstopWFd4WcpN6Q">百度云盘</a>  提取码：6666</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这次这个脚本主要是能批量发送，可以运用到很多场景，比如举办个小型活动，给群里发通知就可以大大节省时间，初学python这次代码主要基于大佬们的代码修改而来，最后再说明下代码仅供学习，不要用于违法的事。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/11/%E5%88%A9%E7%94%A8python%E5%AE%9E%E7%8E%B0%E5%B0%8F%E5%9E%8B%E8%81%8A%E5%A4%A9%E5%B9%B3%E5%8F%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">利用python实现小型聊天平台</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2023 spoula
+      </div>
+        <div class="footer-right">
+          <!-- <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a> -->
+          <a href="https://www.bilibili.com/video/BV1hq4y1s7VH/?spm_id_from=333.337.search-card.all.click" target="_blank">别点这里</a>  
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
