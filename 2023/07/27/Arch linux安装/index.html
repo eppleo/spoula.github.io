@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Arch linux安装 | 别看我</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="安装前准备首先在 Arch linux wiki上下好镜像 ，现在虚拟机上装试试手。 选择好镜像创建虚拟机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arch linux安装">
+<meta property="og:url" content="http://example.com/2023/07/27/Arch%20linux%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="别看我">
+<meta property="og:description" content="安装前准备首先在 Arch linux wiki上下好镜像 ，现在虚拟机上装试试手。 选择好镜像创建虚拟机">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727113906655.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728091954165.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727114032060.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727114839527.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727115040292.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727115424206.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727120057169.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727120538181.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727124540252.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728044709603.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728044845063.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728045012911.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051105963.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051145631.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051216668.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051237557.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051321734.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051416843.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728084559774.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728052950574.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728053130286.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728060102042.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728060213823.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728061020887.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728062146198.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728063336726.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728063957040.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728064342901.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728065442882.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728065649952.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728070009846.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728072727769.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728072523228.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728073830537.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728095944702.png">
+<meta property="article:published_time" content="2023-07-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-28T02:12:11.406Z">
+<meta property="article:author" content="spoula">
+<meta property="article:tag" content="arch">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727113906655.png">
+  
+    <link rel="alternative" href="/atom.xml" title="别看我" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/ida.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/tout.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">spoula</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">目录</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="mail" target="_blank" href="/spoula@126.com" title="mail">mail</a>
+					        
+								<a class="google" target="_blank" href="/goospoula@gmail.com" title="google">google</a>
+					        
+						</div>
+						<!-- music -->
+						
+							<!-- <div style="position: absolute; bottom: 120px; left: auto; width: 85%;"> -->
+							<!-- <div style="position: absolute; left: auto; width: 85%;"> -->
+								<!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=220 height=86 src="//music.163.com/outchain/player?type=0&amp;id=8558675731&amp;auto=1&amp;height=66"></iframe> -->
+								<!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=8558675731&auto=1&height=66"></iframe> -->
+								<!-- <embed border="0" marginwidth="0" marginheight="0" width="250" height="52" src="//music.163.com/outchain/player?type=0&amp;id=8558675731&amp;auto=1&amp;height=32"> -->
+							<!-- </div> -->
+							<div style="width: 232px; height: 86px;">
+								<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="100%" src="//music.163.com/outchain/player?type=0&id=8558675731&auto=1&height=66"></iframe>
+							  </div>
+							  
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/arch/" style="font-size: 10px;">arch</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/qq/" style="font-size: 10px;">qq</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">だるい...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/tout.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">目录</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="mail" target="_blank" href="/spoula@126.com" title="mail">mail</a>
+			        
+						<a class="google" target="_blank" href="/goospoula@gmail.com" title="google">google</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Arch linux安装" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2023/07/27/Arch%20linux%E5%AE%89%E8%A3%85/" class="article-date">
+  	<time datetime="2023-07-26T16:00:00.000Z" itemprop="datePublished">2023-07-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Arch linux安装
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arch/" rel="tag">arch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><p>首先在 <a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/">Arch linux wiki上下好镜像</a> ，现在虚拟机上装试试手。</p>
+<p>选择好镜像创建虚拟机</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727113906655.png" alt="image-20230727113906655"></p>
+<span id="more"></span>
+
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>注意：虚拟机装的话记得将UEFI模式打开</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728091954165.png" alt="image-20230728091954165"></p>
+<p>进去后选第一个</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727114032060.png" alt="image-20230727114032060"></p>
+<p>默认的键盘布局时美式布局，中国大陆基本都是美式布局键盘，不需要改动</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727114839527.png" alt="image-20230727114839527"></p>
+<p>控制台字体在&#x2F;usr&#x2F;share&#x2F;kbd&#x2F;consolefonts&#x2F;目录下</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727115040292.png" alt="image-20230727115040292"></p>
+<p>有很多，使用 setfont 可以更改字体，改一个相对大一点的看的清楚点</p>
+<p>试了几个，感觉 ter-v24n 不错</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727115424206.png" alt="image-20230727115424206"></p>
+<p>虚拟机创建时选的是桥接模式，自动连接到网络</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727120057169.png" alt="image-20230727120057169"></p>
+<p>直接可以使用，如果是物理机的话还需要配置网络连接。</p>
+<p>因为后续要装包，</p>
+<h3 id="物理机上网络连接"><a href="#物理机上网络连接" class="headerlink" title="物理机上网络连接"></a>物理机上网络连接</h3><p>这里提一下物理机上的网络连接，写这篇时还没在物理机上装，简单提一下两种方法。</p>
+<p>在虚拟机上安装的，使用桥接模式直接连上网的，可以跳过这步，直接看 创建硬盘分区。</p>
+<h4 id="USB网络共享"><a href="#USB网络共享" class="headerlink" title="USB网络共享"></a>USB网络共享</h4><p>第一种方式建议直接手机usb网络共享，很方便的。</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727120538181.png" alt="image-20230727120538181"></p>
+<p>用USB数据线把手机和电脑连接，然后打开个人热点里的网络共享就行，可以将手机当作网卡进行网络连接。</p>
+<h4 id="连宽带和WIFI"><a href="#连宽带和WIFI" class="headerlink" title="连宽带和WIFI"></a>连宽带和WIFI</h4><p>连接宽带的话，从路由器接个有线网络插上就能用。</p>
+<p>WIFI的话连接相对比较麻烦</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># iwctl 网卡名 scan</span><br></pre></td></tr></table></figure>
+
+<p>可以扫描WIFI,目前在虚拟机安装，没无线网卡，暂时先不演示配图了。</p>
+<p>现在扫描出来的内容比较多，咱们只需要看WIFI名字就行，加个 | grep ESSID 就行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># iwctl 网卡名 scan | grep ESSID</span><br></pre></td></tr></table></figure>
+
+<p>然后使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wpa_passphrase WIFI名 密码 &gt; 文件名</span><br></pre></td></tr></table></figure>
+
+<p>创建个连接这个WIFI的配置文件。</p>
+<p>然后使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wpa_supplicant -c 文件名 -i 网卡名 &amp;</span><br></pre></td></tr></table></figure>
+
+<p>使用那个配置文件用对应网卡来连接，后面那个&amp;作用时在后台运行，这样就不会影响我们之后配置使用</p>
+<p>现在连上了，但是还没网，这时需要分配个IP</p>
+<p>使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># dhcpcd &amp;</span><br></pre></td></tr></table></figure>
+
+<p>动态分配个ip，同样是后台运行。</p>
+<p>现在ping下baidu.com试试，理论上是连上WIFI网络了。</p>
+<h3 id="创建硬盘分区"><a href="#创建硬盘分区" class="headerlink" title="创建硬盘分区"></a>创建硬盘分区</h3><p>创建硬盘分区前最好先更新一下系统时间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># timedatectl set-ntp true</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230727124540252.png" alt="image-20230727124540252"></p>
+<p>接下来就能为系统分区了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># fdisk -l</span><br></pre></td></tr></table></figure>
+
+<p>可以查看当前磁盘情况</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728044709603.png" alt="image-20230728044709603"></p>
+<p>我当时创这个虚拟机时给了20g的空间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># fdisk 磁盘</span><br></pre></td></tr></table></figure>
+
+<p>再对这个磁盘进行修改</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728044845063.png" alt="image-20230728044845063"></p>
+<p>m可以查看帮助</p>
+<p>可以依据官网上的安装指南的UEFI分区方案进行分区</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728045012911.png" alt="image-20230728045012911"></p>
+<p>先按g创建一个GPT分区格式</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051105963.png" alt="image-20230728051105963"></p>
+<p>输入n添加一个新分区</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051145631.png" alt="image-20230728051145631"></p>
+<p>分区号就用默认的1分区，起始sector默认最开始，+512M代表分给这个分区512MB，也可以直接写终止的sector，这里分512MB给引导分区（EFI系统分区）</p>
+<p>然后可以再加个swap分区，这个分区时虚拟内存分区，一般分的是内存大小差不多大或者大一点，也可以不分这个分区，如用到会使用根分区的空间，这个分区分很小也没事，这边我给它分1g，指定为3分区</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051216668.png" alt="image-20230728051216668"></p>
+<p>然后就是分根分区了，直接把剩下的全分给它就行</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051237557.png" alt="image-20230728051237557"></p>
+<p>分好后输入p看看分的对不对，是不是想要的结果</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051321734.png" alt="image-20230728051321734"></p>
+<p>确认无误后w写入</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728051416843.png" alt="image-20230728051416843"></p>
+<p>引导分区必须是Fat32，不然可能无法启动系统，再将引导分区的文件格式改成Fat32就行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkfs.fat -F32 EFI系统分区</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728084559774.png" alt="image-20230728084559774"></p>
+<p>接下来给主分区分文件格式，一般来说linux都用的ext格式，这个格式挺快的，也挺好用，这里就用<a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Ext4">ext4</a>就行，windows默认的文件系统是<a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/NTFS">NTFS</a>，再物理机上双系统时，ext4系统可以访问NTFS系统对的文件，但是windows访问不了ext4系统文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkfs.ext4 根分区</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728052950574.png" alt="image-20230728052950574"></p>
+<p>最后再给swap分区初始化下，如果没分swap分区就不用管</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkswap swap分区</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728053130286.png" alt="image-20230728053130286"></p>
+<p>接着使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># swapon swap分区</span><br></pre></td></tr></table></figure>
+
+<p>启用这个swap分区</p>
+<p>接下来挂载一下分区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount --mkdir EFI系统分区 /mnt/boot</span><br></pre></td></tr></table></figure>
+
+<p>先将引导分区挂载</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728060102042.png" alt="image-20230728060102042"></p>
+<p>再挂载根分区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount 根分区 /mnt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728060213823.png" alt="image-20230728060213823"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk -f </span><br></pre></td></tr></table></figure>
+
+<p>可以查看目前挂载情况</p>
+<h3 id="安装系统"><a href="#安装系统" class="headerlink" title="安装系统"></a>安装系统</h3><p>接下来要下载东西，为了下载快点，切换到国内的源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
+
+<p>对这个文件进行编辑</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728061020887.png" alt="image-20230728061020887"></p>
+<p>再这些镜像源前面添加上国内的镜像源使得速度快点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = http://mirrors.163.com/archlinux/$repo/os/$arch</span><br><span class="line">Server = http://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch</span><br></pre></td></tr></table></figure>
+
+<p>加上清华，网易，中科大的</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728062146198.png" alt="image-20230728062146198"></p>
+<p>接下来开始正式装系统</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacstrap /mnt base linux linux-firmware</span><br></pre></td></tr></table></figure>
+
+<p>这一段意思是安装一些东西再挂载根目录的&#x2F;mnt下，base是一个包，包含了arch的大部分软件之类，然后是安装linux的内核和linux的框架，接下来让它慢慢安装。</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728063336726.png" alt="image-20230728063336726"></p>
+<p>安装好了，下面生成一下<a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Fstab">fstab</a>文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>生成完后通过chroot进入装好的系统</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># arch-chroot /mnt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728063957040.png" alt="image-20230728063957040"></p>
+<p>先设置下时区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ln -sf /usr/share/zoneinfo/地区名/城市名 /etc/localtime</span><br></pre></td></tr></table></figure>
+
+<p>因为在国内，设置为上海，设置好后同步一下时间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># hwclock --systohc</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728064342901.png" alt="image-20230728064342901"></p>
+<p>接下来生成下本地化，因为需要编辑文件，先装一个vim</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacman -S vim</span><br></pre></td></tr></table></figure>
+
+<p>装好后编辑一下locale.gen文件，帮助我们生成本地化。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728065442882.png" alt="image-20230728065442882"></p>
+<p>找到en_US.UTF-8 UTF-8并把这个注释解掉，保存后，生成locale信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># locale-gen</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728065649952.png" alt="image-20230728065649952"></p>
+<p>接着创建locale.conf文件以编辑设定lang变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/locale.conf</span><br></pre></td></tr></table></figure>
+
+<p>在里面写上 LANG&#x3D;en_US.UTF-8 ，保存退出即可</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728070009846.png" alt="image-20230728070009846"></p>
+<p>接下来配置关于网络的问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/hostname</span><br></pre></td></tr></table></figure>
+
+<p>先编辑一下自己的主机名，喜欢什么名就行</p>
+<p>编辑后保存。</p>
+<p>接着修改下本地主机名解析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1        localhost</span><br><span class="line">::1              localhost</span><br><span class="line">127.0.1.1        主机名.localdomain        主机名</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728072727769.png" alt="image-20230728072727769"></p>
+<p>这里的baka是我刚设的主机名，换成自己的主机名就行，然后保存退出</p>
+<p>接着再给root设个密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># passwd</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728072523228.png" alt="image-20230728072523228"></p>
+<p>接下来再安装个引导系统，一变启动系统，包括多系统时启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacman -S grub efibootmgr intel-ucode os-prober</span><br></pre></td></tr></table></figure>
+
+<p>这里如果用的是amd的cpu就将上面的intel-ucode改成amd-ucode</p>
+<p>接着创建个文件夹来放grub</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /boot/GRUB</span><br></pre></td></tr></table></figure>
+
+<p>然后生成grub配置文件在那个文件夹下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grub-mkconfig &gt; /boot/GRUB/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728073830537.png" alt="image-20230728073830537"></p>
+<p>生成好后安装grub即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grub-install --target=x86_64-efi --efi-directory=/boot</span><br></pre></td></tr></table></figure>
+
+<p>我这个系统架构是x86_64的，uname -m可以查看自己架构，改成自己架构即可</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20230728095944702.png" alt="image-20230728095944702"></p>
+<p>理论上现在重启就算安装成功了</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/15/%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96qq%E7%BE%A4%E5%86%85%E6%88%90%E5%91%98%E4%BF%A1%E6%81%AF%E5%8F%8A%E6%89%B9%E9%87%8F%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">爬虫爬取qq群内成员信息及批量发送邮件</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2023 spoula
+      </div>
+        <div class="footer-right">
+          <!-- <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a> -->
+          <a href="https://www.bilibili.com/video/BV1hq4y1s7VH/?spm_id_from=333.337.search-card.all.click" target="_blank">别点这里</a>  
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
