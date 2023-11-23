@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>函数调用约定 | 别看我</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="​		 ​		函数调用约定，是指当一个函数被调用时，函数的参数会被传递给被调用的函数和返回值会被返回给调用函数。函数的调用约定就是描述参数是怎么传递和由谁平衡堆栈的，当然还有返回值。 windows平台下主要又三种函数调用约定 分别是： _cdecl , _stdcall 和  _fastcall">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数调用约定">
+<meta property="og:url" content="http://example.com/2023/11/23/%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A/index.html">
+<meta property="og:site_name" content="别看我">
+<meta property="og:description" content="​		 ​		函数调用约定，是指当一个函数被调用时，函数的参数会被传递给被调用的函数和返回值会被返回给调用函数。函数的调用约定就是描述参数是怎么传递和由谁平衡堆栈的，当然还有返回值。 windows平台下主要又三种函数调用约定 分别是： _cdecl , _stdcall 和  _fastcall">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221205057.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221259790.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221403694.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221445568.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123222041031.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123223030637.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123223119122.png">
+<meta property="og:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123223146985.png">
+<meta property="article:published_time" content="2023-11-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-23T14:33:15.929Z">
+<meta property="article:author" content="spoula">
+<meta property="article:tag" content="reverse">
+<meta property="article:tag" content="asm">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221205057.png">
+  
+    <link rel="alternative" href="/atom.xml" title="别看我" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/ida.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/tout.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">spoula</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">目录</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="mail" target="_blank" href="/spoula@126.com" title="mail">mail</a>
+					        
+								<a class="google" target="_blank" href="/goospoula@gmail.com" title="google">google</a>
+					        
+						</div>
+						<!-- music -->
+						
+							<!-- <div style="position: absolute; bottom: 120px; left: auto; width: 85%;"> -->
+							<!-- <div style="position: absolute; left: auto; width: 85%;"> -->
+								<!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=220 height=86 src="//music.163.com/outchain/player?type=0&amp;id=8558675731&amp;auto=1&amp;height=66"></iframe> -->
+								<!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=8558675731&auto=1&height=66"></iframe> -->
+								<!-- <embed border="0" marginwidth="0" marginheight="0" width="250" height="52" src="//music.163.com/outchain/player?type=0&amp;id=8558675731&amp;auto=1&amp;height=32"> -->
+							<!-- </div> -->
+							<div style="width: 232px; height: 86px;">
+								<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="100%" src="//music.163.com/outchain/player?type=0&id=8558675731&auto=1&height=66"></iframe>
+							  </div>
+							  
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/arch/" style="font-size: 10px;">arch</a> <a href="/tags/asm/" style="font-size: 10px;">asm</a> <a href="/tags/ctf/" style="font-size: 10px;">ctf</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/qq/" style="font-size: 10px;">qq</a> <a href="/tags/reverse/" style="font-size: 20px;">reverse</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E9%82%AE%E7%AE%B1/" style="font-size: 10px;">邮箱</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">だるい...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/tout.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">目录</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="mail" target="_blank" href="/spoula@126.com" title="mail">mail</a>
+			        
+						<a class="google" target="_blank" href="/goospoula@gmail.com" title="google">google</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-函数调用约定" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2023/11/23/%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A/" class="article-date">
+  	<time datetime="2023-11-22T16:00:00.000Z" itemprop="datePublished">2023-11-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      函数调用约定
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asm/" rel="tag">asm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>​		</p>
+<p>​		函数调用约定，是指当一个函数被调用时，函数的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8F%82%E6%95%B0/5934974?fromModule=lemma_inlink">参数</a>会被传递给被调用的函数和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%BF%94%E5%9B%9E%E5%80%BC/9629649?fromModule=lemma_inlink">返回值</a>会被返回给调用函数。函数的调用约定就是描述参数是怎么传递和由谁平衡<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A0%86%E6%A0%88/1682032?fromModule=lemma_inlink">堆栈</a>的，当然还有返回值。</p>
+<p>windows平台下主要又三种函数调用约定</p>
+<p>分别是：</p>
+<p>_cdecl , _stdcall 和  _fastcall</p>
+<span id="more"></span>
+
+<h2 id="cdecl"><a href="#cdecl" class="headerlink" title="__cdecl"></a>__cdecl</h2><p>__cdecl函数约定由四个特点：</p>
+<ol>
+<li>使用栈空间传递参数</li>
+<li>函数参数按从左往右的方向传递</li>
+<li>调用者负责释放参数空间</li>
+<li>返回值在寄存器中</li>
+</ol>
+<p>下面对一段代码进行分析，代码是:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> __cdecl <span class="title function_">sum</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> m = <span class="number">1</span> , n = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> y = sum(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看看这段代码的汇编</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">_a$ = 8                                       ; size = 4</span><br><span class="line">_b$ = 12                                                ; size = 4</span><br><span class="line">int sum(int,int) PROC                                  ; sum</span><br><span class="line">        push    ebp</span><br><span class="line">        mov     ebp, esp</span><br><span class="line">        mov     eax, DWORD PTR _a$[ebp]</span><br><span class="line">        add     eax, DWORD PTR _b$[ebp]</span><br><span class="line">        pop     ebp</span><br><span class="line">        ret     0</span><br><span class="line">int sum(int,int) ENDP                                  ; sum</span><br><span class="line"></span><br><span class="line">_y$ = -12                                         ; size = 4</span><br><span class="line">_n$ = -8                                                ; size = 4</span><br><span class="line">_m$ = -4                                                ; size = 4</span><br><span class="line">_main   PROC</span><br><span class="line">        push    ebp</span><br><span class="line">        mov     ebp, esp</span><br><span class="line">        sub     esp, 12                             ; 0000000cH</span><br><span class="line">        mov     DWORD PTR _m$[ebp], 1</span><br><span class="line">        mov     DWORD PTR _n$[ebp], 2</span><br><span class="line">        push    2</span><br><span class="line">        push    1</span><br><span class="line">        call    int sum(int,int)                     ; sum</span><br><span class="line">        add     esp, 8</span><br><span class="line">        mov     DWORD PTR _y$[ebp], eax</span><br><span class="line">        xor     eax, eax</span><br><span class="line">        mov     esp, ebp</span><br><span class="line">        pop     ebp</span><br><span class="line">        ret     0</span><br><span class="line">_main   ENDP</span><br></pre></td></tr></table></figure>
+
+
+
+<p>之前提到__cdecl是用栈传递参数,且传参方向是从右往左的</p>
+<p>对应下图两个push</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221205057.png" alt="image-20231123221205057"></p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221259790.png" alt="image-20231123221259790"></p>
+<p>反回值被存在寄存器eax里</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221403694.png" alt="image-20231123221403694"></p>
+<p>调用者（这里是main函数）负责释放参数空间</p>
+<p>将栈顶指针加8以达到释放目的</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123221445568.png" alt="image-20231123221445568"></p>
+<h2 id="stdcall"><a href="#stdcall" class="headerlink" title="__stdcall"></a>__stdcall</h2><p> _stdcall函数调用约定方式于 _cdecl 基本一直，唯一不同的是释放参数空间是被调用者</p>
+<ol>
+<li>使用栈空间传递参数</li>
+<li>函数参数按从左往右的方向传递</li>
+<li>被调用者负责释放参数空间</li>
+<li>返回值在寄存器中</li>
+</ol>
+<p>还用刚刚那段代码做例子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> __stdcall <span class="title function_">sum</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> m = <span class="number">1</span> , n = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> y = sum(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的汇编是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">_a$ = 8                                       ; size = 4</span><br><span class="line">_b$ = 12                                                ; size = 4</span><br><span class="line">int sum(int,int) PROC                                  ; sum</span><br><span class="line">        push    ebp</span><br><span class="line">        mov     ebp, esp</span><br><span class="line">        mov     eax, DWORD PTR _a$[ebp]</span><br><span class="line">        add     eax, DWORD PTR _b$[ebp]</span><br><span class="line">        pop     ebp</span><br><span class="line">        ret     8</span><br><span class="line">int sum(int,int) ENDP                                  ; sum</span><br><span class="line"></span><br><span class="line">_y$ = -12                                         ; size = 4</span><br><span class="line">_n$ = -8                                                ; size = 4</span><br><span class="line">_m$ = -4                                                ; size = 4</span><br><span class="line">_main   PROC</span><br><span class="line">        push    ebp</span><br><span class="line">        mov     ebp, esp</span><br><span class="line">        sub     esp, 12                             ; 0000000cH</span><br><span class="line">        mov     DWORD PTR _m$[ebp], 1</span><br><span class="line">        mov     DWORD PTR _n$[ebp], 2</span><br><span class="line">        push    2</span><br><span class="line">        push    1</span><br><span class="line">        call    int sum(int,int)                     ; sum</span><br><span class="line">        mov     DWORD PTR _y$[ebp], eax</span><br><span class="line">        xor     eax, eax</span><br><span class="line">        mov     esp, ebp</span><br><span class="line">        pop     ebp</span><br><span class="line">        ret     0</span><br><span class="line">_main   ENDP</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这边是被调用者（也就是sum函数）示范参数空间</p>
+<p>可以看的这边sum函数返回的ret指令后面跟了个8</p>
+<p>代表栈顶指针值加8，以释放参数空间</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123222041031.png" alt="image-20231123222041031"></p>
+<h2 id="fastcall"><a href="#fastcall" class="headerlink" title="__fastcall"></a>__fastcall</h2><p>_fastcall 顾名思义更fast</p>
+<p>为什么更快呢，因为他前两个参数是用寄存器进行传递的</p>
+<p>在计算机中，cpu访问寄存器内容的速度是远远高于访问内存的</p>
+<p>如果有三个及以上个参数的话，剩下的参数用栈进行传递</p>
+<ol>
+<li>前两个参数使用寄存器传递</li>
+<li>其余参数使用栈从右往左的方向传递</li>
+<li>被调用函数负责释放参数空间</li>
+<li>返回值在寄存器中</li>
+</ol>
+<p>这边把刚刚代码改一下，多加2个参数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sum</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b, <span class="type">int</span> c, <span class="type">int</span> d)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b+c+d;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> y = sum(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的汇编是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">_b$ = -8                                                ; size = 4</span><br><span class="line">_a$ = -4                                                ; size = 4</span><br><span class="line">_c$ = 8                                       ; size = 4</span><br><span class="line">_d$ = 12                                                ; size = 4</span><br><span class="line">int sum(int,int,int,int) PROC                                    ; sum</span><br><span class="line">        push    ebp</span><br><span class="line">        mov     ebp, esp</span><br><span class="line">        sub     esp, 8</span><br><span class="line">        mov     DWORD PTR _b$[ebp], edx</span><br><span class="line">        mov     DWORD PTR _a$[ebp], ecx</span><br><span class="line">        mov     eax, DWORD PTR _a$[ebp]</span><br><span class="line">        add     eax, DWORD PTR _b$[ebp]</span><br><span class="line">        add     eax, DWORD PTR _c$[ebp]</span><br><span class="line">        add     eax, DWORD PTR _d$[ebp]</span><br><span class="line">        mov     esp, ebp</span><br><span class="line">        pop     ebp</span><br><span class="line">        ret     8</span><br><span class="line">int sum(int,int,int,int) ENDP                                    ; sum</span><br><span class="line"></span><br><span class="line">_y$ = -4                                                ; size = 4</span><br><span class="line">_main   PROC</span><br><span class="line">        push    ebp</span><br><span class="line">        mov     ebp, esp</span><br><span class="line">        push    ecx</span><br><span class="line">        push    4</span><br><span class="line">        push    3</span><br><span class="line">        mov     edx, 2</span><br><span class="line">        mov     ecx, 1</span><br><span class="line">        call    int sum(int,int,int,int)               ; sum</span><br><span class="line">        mov     DWORD PTR _y$[ebp], eax</span><br><span class="line">        xor     eax, eax</span><br><span class="line">        mov     esp, ebp</span><br><span class="line">        pop     ebp</span><br><span class="line">        ret     0</span><br><span class="line">_main   ENDP</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这边传了四个参数，可以看的前两个参数1和2分别放入ecx和edx寄存器里传递的</p>
+<p>然后其余参数从右往左压入栈内传参</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123223030637.png" alt="image-20231123223030637"></p>
+<p>也是被调用者释放参数空间</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123223119122.png" alt="image-20231123223119122"></p>
+<p>返回值也是被存入寄存器eax中返回的</p>
+<p><img src="https://tuu-1318296368.cos.ap-nanjing.myqcloud.com/blog/image-20231123223146985.png" alt="image-20231123223146985"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/11/16/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84js%E9%80%86%E5%90%91%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一个简单的js逆向题</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2023 spoula
+      </div>
+        <div class="footer-right">
+          <!-- <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a> -->
+          <a href="https://www.bilibili.com/video/BV1hq4y1s7VH/?spm_id_from=333.337.search-card.all.click" target="_blank">别点这里</a>  
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
